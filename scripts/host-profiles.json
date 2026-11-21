@@ -1,0 +1,33 @@
+[
+  {
+    "versionName": "1.0.6", "versionCode": 216,
+    "sha256": "4c1c57ae811cb959478efb5ec510000f7f51ddcb427afff369b1582c66b60206",
+    "replacedDex": ["classes2.dex"], "hookDex": "classes5.dex", "addonDex": "classes6.dex",
+    "callbackDex": "smali_classes2", "transportDex": "smali_classes2",
+    "callback": "Lp8/c$c;", "teleprompter": "Lo8/f$b;", "assistant": "Lp8/c;",
+    "transport": "LX3/U;", "transportMethod": "i", "device": "LX3/C;", "packet": "LX3/p;",
+    "runtime": {"callbackClass": "p8.c$c", "asrRecorder": "o8.p", "microphone": "l8.V0", "audioBytesMethod": "u",
+      "transport": "X3.u", "devicesMethod": "h", "request": "X3.Q", "business": "i4.h"}
+  },
+  {
+    "versionName": "1.0.10", "versionCode": 258,
+    "sha256": "951dabcb8a0a954dd90b901dab9a6b53c48c406545879f4900949c8b41e26e22",
+    "replacedDex": ["classes2.dex", "classes3.dex"], "hookDex": "classes5.dex", "addonDex": "classes6.dex",
+    "callbackDex": "smali_classes3", "transportDex": "smali_classes2",
+    "callback": "Lm9/c$c;", "teleprompter": "Ll9/e$b;", "assistant": "Lm9/c;",
+    "transport": "LO4/Y;", "transportMethod": "l", "device": "LO4/G;", "packet": "LO4/q;",
+    "runtime": {"callbackClass": "m9.c$c", "asrRecorder": "l9.p", "microphone": "i9.W0", "audioBytesMethod": "t",
+      "transport": "O4.v", "devicesMethod": "j", "request": "O4.V", "business": "a5.h"}
+  },
+  {
+    "versionName": "1.0.25", "versionCode": 511,
+    "sha256": "1bf1a431a45a1741834b70122e1abd1a2b550931cafb6b24836dbdd4f23fbc58",
+    "replacedDex": ["classes3.dex", "classes4.dex"], "hookDex": "classes8.dex", "addonDex": "classes9.dex",
+    "callbackDex": "smali_classes4", "transportDex": "smali_classes3",
+    "callback": "Llm0/d$c;", "teleprompter": "Lkm0/e$b;", "assistant": "Llm0/d;",
+    "transport": "Lcom/ffalconxr/mercury/coreconnect/x0;", "transportMethod": "l", "device": "Lcom/ffalconxr/mercury/coreconnect/f0;", "packet": "Lcom/ffalconxr/mercury/coreconnect/p;",
+    "runtime": {"callbackClass": "lm0.d$c", "asrRecorder": "km0.o", "microphone": "com.rayneo.rayneo_venus_sdk_plugin.f3", "audioBytesMethod": "W",
+      "transport": "com.ffalconxr.mercury.coreconnect.v", "devicesMethod": "j", "request": "com.ffalconxr.mercury.coreconnect.u0", "business": "lc.h",
+      "assistantExitMethod": "v", "transportSendMethod": "u"}
+  }
+]

@@ -1,0 +1,80 @@
+package cn.yilu.rayneopaseo;
+
+import java.util.concurrent.atomic.AtomicLong;
+
+public final class TurnGateTest {
+    private static void check(boolean condition) { if (!condition) throw new AssertionError(); }
+    public static void main(String[] args) {
+        Object first = new Object(), other = new Object();
+        TurnGate gate = new TurnGate();
+        check(gate.recognize(first, "问题一", true, "s1"));
+        check(!gate.recognize(first, "问题一", true, "s1"));
+        check(gate.beginReply(other, "s1") == -1);
+        check(gate.beginReply(first, "wrong-session") == -1);
+        long old = gate.beginReply(first, "s1");
+        check(old >= 0 && gate.accepts(old));
+        check(gate.owns(first, "s1"));
+        gate.recognize(first, "新问题", false, "s2");
+        check(!gate.accepts(old));
+        check(gate.recognize(first, "问题二", true, "s2"));
+        long current = gate.beginReply(first, "s2");
+        check(gate.accepts(current));
+        check(!gate.accepts(old));
+        check(gate.complete(current));
+        check(!gate.complete(current));
+        check(!gate.accepts(current));
+        check(gate.owns(first, "s2"));
+        gate.reset();
+        check(!gate.owns(first, "s2"));
+        check(gate.beginReply(first, "s2") == -1);
+        TurnGate segmented = new TurnGate();
+        check(segmented.recognize(first, "苹果", true, "part-1"));
+        check(!segmented.recognize(first, "香", false, "part-2"));
+        check(segmented.recognize(first, "香蕉", true, "part-2"));
+        check(!segmented.recognize(first, "樱", false, "part-3"));
+        check(segmented.recognize(first, "樱桃", true, "part-3"));
+        check(segmented.recognize(first, "请依次复述这三个词", true, "part-4"));
+        check(segmented.beginReply(first, "part-4") >= 0);
+        check("苹果，香蕉，樱桃，请依次复述这三个词".equals(segmented.question()));
+        AtomicLong time = new AtomicLong(1000);
+        TurnGate bounded = new TurnGate(time::get);
+        check(bounded.recognize(first, "旧问题", true, "old"));
+        time.set(7001);
+        check(bounded.recognize(first, "新问题", true, "new"));
+        check("新问题".equals(bounded.question()));
+        time.set(8000);
+        check(bounded.recognize(other, "另一人", true, "other"));
+        check("另一人".equals(bounded.question()));
+        check(bounded.beginReply(other, "other") >= 0);
+        check(!bounded.recognize(other, "后", false, "after"));
+        check(bounded.recognize(other, "后续问题", true, "after"));
+        check("后续问题".equals(bounded.question()));
+        int[] delivery = {0}, completions = {0};
+        TurnFinalizer failedDisplay = new TurnFinalizer(() -> completions[0]++);
+        check(!failedDisplay.finish(() -> { delivery[0]++; throw new Exception("display failed"); }));
+        check(completions[0] == 1 && failedDisplay.isClosed());
+        failedDisplay.closeSafely();
+        check(completions[0] == 1);
+        TurnFinalizer cancelled = new TurnFinalizer(() -> completions[0]++);
+        check(cancelled.closeSafely());
+        check(!cancelled.finish(() -> delivery[0]++));
+        check(delivery[0] == 1 && completions[0] == 2);
+        TurnFinalizer failedCompletion = new TurnFinalizer(() -> { throw new Exception("completion failed"); });
+        check(!failedCompletion.closeSafely());
+        check(!failedCompletion.isClosed());
+        DisplayChunks chunks = new DisplayChunks();
+        check("开始处理。".equals(chunks.preview("开始处理。")));
+        chunks.previewDelivered("开始处理。");
+        check(chunks.preview("开始处理。")==null);
+        check("\n处理完成。".equals(chunks.finalChunk("开始处理。\n处理完成。")));
+        check(chunks.preview("被更正的整段文字")==null);
+        int[] conversationCloses = {0};
+        TurnFinalizer conversation = new TurnFinalizer(() -> conversationCloses[0]++);
+        check(conversation.deliver(() -> delivery[0]++));
+        check(!conversation.isClosed() && conversationCloses[0] == 0);
+        check(conversation.closeSafely());
+        check(conversationCloses[0] == 1);
+        check(!conversation.deliver(() -> delivery[0]++));
+        System.out.println("TurnGate: session, duplicate, cancellation and completion checks passed");
+    }
+}

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>眼镜连接器</title><link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script></head>
+<body>
+<header><a class="brand" href="/">眼镜连接器</a><span class="edition">测试版</span></header>
+<main>
+<p id="preview" class="notice" hidden>演示数据，仅用于检查页面，不代表实际连接。</p>
+<p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
+<section aria-labelledby="prepare-title">
+<h1 id="prepare-title">第一步：准备电脑和手机</h1>
+<div class="prepare-grid">
+<section class="panel" aria-labelledby="computer-title">
+<div class="panel-heading"><h2 id="computer-title">电脑端</h2><button id="refresh" class="quiet" type="button">刷新状态</button></div>
+<div class="backend-list" aria-live="polite">
+<article class="backend"><div class="backend-line"><h3>连接 Codex</h3><span id="codex-status" class="status">检查中</span></div><p id="codex-detail" class="detail" hidden></p></article>
+<article class="backend"><div class="backend-line"><h3>连接 Paseo</h3><span id="paseo-status" class="status">检查中</span></div><p>适用于 Codex、Claude Code、OpenCode 等 Agent。</p><p id="paseo-detail" class="detail" hidden></p></article>
+</div><p id="detected" class="support"></p>
+</section>
+<section class="panel phone-panel" aria-labelledby="phone-title"><div class="panel-heading"><h2 id="phone-title">手机端</h2></div>
+<h3>安装改造版雷鸟 App</h3><p>适用版本和安装说明见 GitHub 发行页。</p>
+<div class="download-actions"><a class="download-button secondary" href="https://github.com/turbotang2333/io-voice-control/releases" target="_blank" rel="noopener noreferrer">下载安卓 APK</a>
+<details class="download-qr"><summary>手机扫码下载</summary><img src="/android-download-qr.png" alt="手机扫码打开 GitHub 发行页" width="208" height="208" loading="lazy"></details></div>
+</section>
+</div></section>
+<section class="pairing-section" aria-labelledby="step-two"><h2 id="step-two" class="step-title">第二步：连接并配对</h2>
+<div id="connection-choices" class="connection-choices" aria-label="选择连接方式">
+<button id="choose-project" class="choice-card" type="button" aria-pressed="false"><strong>使用作者中转</strong><span>输入测试码，快速连接</span></button>
+<button id="choose-self" class="choice-card" type="button" aria-pressed="false"><strong>使用自己的服务器</strong><span>使用自己的服务器部署中转</span></button>
+</div>
+<div id="connection-panel" class="connection-panel" hidden><div class="connection-copy"><h3 id="status-title">正在检查电脑连接</h3><p id="status-description">正在读取已有设置，请稍候。</p>
+<p id="service-notice" class="support">个人提供的试用中转，可能中断，使用时会产生网络流量。</p>
+<div class="actions"><button id="connect" class="primary" disabled>连接并配对</button><button id="pair" class="primary" disabled hidden>生成配对二维码</button></div><p id="pair-hint" class="support" hidden></p><p id="pair-instructions" class="support" hidden>打开手机 App，在“助手设置”中选择“扫码配对电脑”。</p><div id="service-confirm" class="consent" hidden><p>通过小红书私信或邮件获取测试码。</p><label for="invitation-code">测试码</label><input id="invitation-code" type="password" autocomplete="off" spellcheck="false"><div class="actions"><button id="confirm-connect" class="primary" type="button">确认并连接</button><button id="cancel-connect" class="secondary" type="button">取消</button></div></div>
+</div>
+<div id="qr-box" class="qr-box" hidden><h3 id="qr-title">用手机 App 扫码配对</h3><img id="qr" alt="手机配对电脑的二维码" width="280" height="280" hidden><p id="expiry"></p><p id="qr-profiles" class="support"></p><div class="qr-actions"><button id="regenerate" class="quiet">重新生成</button><button id="close-qr" class="quiet">收起</button></div></div>
+</div>
+<div id="self-hosted" hidden><div class="self-hosted-body">
+<h3>使用自己的服务器</h3><p>需要有公网 IP 或域名的 Linux 服务器，并能登录服务器、开放端口。</p>
+<div id="self-hosted-setup"><p>请开放 TCP 443 和 2222。安装程序会检查并尝试安装缺少的组件。</p>
+<label for="self-bootstrap-host">服务器公网 IP 或域名</label><input id="self-bootstrap-host" autocomplete="off" placeholder="例如 203.0.113.10">
+<button id="self-bootstrap-install" type="button" class="secondary">生成安装命令</button><div id="self-bootstrap-command-box" hidden><label for="self-bootstrap-command">服务器安装命令</label><textarea id="self-bootstrap-command" rows="4" readonly spellcheck="false"></textarea><button id="self-bootstrap-copy" type="button" class="quiet">复制命令</button><p>登录服务器后粘贴运行，保持电脑连接器和服务器窗口打开。电脑会自动连接；命令含一次性身份信息，请勿分享。</p><p id="self-bootstrap-progress" role="status"></p></div>
+<details><summary>使用已有配对信息</summary><label for="self-bootstrap-code">服务器显示的配对信息</label><textarea id="self-bootstrap-code" rows="4" autocomplete="off" spellcheck="false"></textarea><div class="actions"><button id="self-bootstrap-pair" type="button" class="primary">连接自己的服务器</button></div></details>
+<details><summary>手动配置包方式</summary><p>如果服务器已提示安装完成，但电脑未收到结果，可在这里填写地址和公钥、生成配置包，然后直接点“安装完成，连接电脑”，无需重复安装。</p><p>先通过可信方式登录服务器，运行 <code>cat /etc/ssh/ssh_host_ed25519_key.pub</code>，将输出完整复制到下方。这个公钥用来确认服务器身份。</p>
+<label for="self-ip">服务器公网 IP 或域名</label><input id="self-ip" autocomplete="off" placeholder="例如 203.0.113.10">
+<label for="self-host-key">服务器 SSH 公钥</label><textarea id="self-host-key" rows="3" spellcheck="false" autocomplete="off" placeholder="ssh-ed25519 开头的完整公钥"></textarea>
+<div class="self-ports"><div><label for="self-public-port">手机访问端口</label><input id="self-public-port" type="number" min="1" max="65535" value="443"></div><div><label for="self-ssh-port">专用 SSH 端口</label><input id="self-ssh-port" type="number" min="1" max="65535" value="2222"></div></div>
+<label class="confirm-key"><input id="self-key-confirm" type="checkbox">我已通过可信的服务器登录方式核对上述公钥</label>
+<div class="actions"><button id="self-prepare" type="button" class="secondary">生成服务器配置包</button></div>
+<div id="self-bundle" hidden><h3>在服务器安装</h3><p>把下面的整个文件夹复制到服务器，并进入该文件夹：</p><p><code id="self-bundle-path"></code></p><p>先运行 <code>sudo node relay/install.mjs --check</code> 检查；通过后运行 <code>sudo node relay/install.mjs --install</code> 安装。安装完成并开放端口后，回到这里。</p><div class="actions"><button id="self-finish" type="button" class="primary">安装完成，连接电脑</button></div></div>
+</details>
+</div>
+<div id="self-hosted-update" hidden><h3>服务器 IP 变更</h3><p>只适用于同一服务器、SSH 公钥未变的情况。更新后需重新连接并在手机扫码；旧配置会保留。</p><label for="self-new-ip">新的公网 IPv4</label><input id="self-new-ip" autocomplete="off" placeholder="例如 203.0.113.11"><div class="actions"><button id="self-change-ip" type="button" class="secondary">更新 IP 并重新连接</button></div></div>
+<p id="self-hosted-update-unavailable" hidden>当前自建连接不是同地址的 IPv4 连接，请保留现有设置并检查服务器配置。</p>
+<div id="self-hosted-recovery" hidden><h3>恢复中断前的配置</h3><p>更新中断，旧配置仍在。请选择要恢复的旧配置；恢复后需重新检查连接。</p><label for="self-backup">保留的旧配置</label><select id="self-backup"></select><div class="actions"><button id="self-restore" type="button" class="secondary">恢复旧配置</button></div></div>
+</div></div>
+</section>
+<details id="settings"><summary>连接帮助</summary><div class="settings-body">
+<p id="encryption-info" class="support" role="status" hidden></p>
+<p>电脑需要保持开机联网。连接异常时，请检查助手是否打开并登录。</p>
+</div></details>
+<section class="search-package" aria-labelledby="search-title">
+<div><h2 id="search-title">智能搜索本地对话</h2><p>凭描述搜索电脑里的对话。关键词搜索始终可用。</p><p id="search-status" class="support" role="status">正在检查…</p></div>
+<div class="search-actions"><button id="search-install" class="secondary" type="button" hidden>下载并启用</button><button id="search-remove" class="quiet" type="button" hidden>删除智能搜索</button><progress id="search-progress" aria-label="智能搜索安装进度" max="100" hidden></progress></div>
+</section>
+</main></body></html>

@@ -1,0 +1,27 @@
+{
+  "name": "rayneo-paseo",
+  "version": "0.2.0-trial.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"tests/*.test.mjs\" \"experiments/**/*.test.mjs\"",
+    "probe": "node bridge/probe.mjs",
+    "bridge": "node bridge/server.mjs",
+    "prepare-local": "node scripts/prepare-local.mjs",
+    "prepare-daily": "node scripts/prepare-daily.mjs",
+    "daily:check": "node bridge/supervisor.mjs --check",
+    "daily": "node bridge/supervisor.mjs"
+  },
+  "dependencies": {
+    "@getpaseo/client": "0.13.0",
+    "@huggingface/transformers": "3.8.1",
+    "qrcode": "1.5.4",
+    "tar": "7.5.22"
+  },
+  "overrides": {
+    "sharp": "0.35.5"
+  }
+}
