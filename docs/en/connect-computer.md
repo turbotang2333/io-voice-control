@@ -51,4 +51,4 @@ The glasses have sometimes disconnected on wake-up during testing. After setup, 
 
 Download the new installer from the project releases page, quit the connector from the Windows notification area, and run the installer against the existing installation location. Compatible versions update in place. If the installer reports an incompatible runtime or setup file, it keeps the existing installation. Follow the instructions in the new release notes.
 
-[Back to the project homepage](../../README.md)
+[Back to the project homepage](../../README.en.md)

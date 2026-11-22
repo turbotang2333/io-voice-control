@@ -18,4 +18,4 @@ The RayNeo app passes commands to Mika on the same Android phone using an access
 
 Keep test codes, pairing QR codes, access tokens, and private conversations out of public issue reports. Send privacy or security reports by [email](mailto:turbotang2333@gmail.com).
 
-[Back to the project homepage](../../README.md)
+[Back to the project homepage](../../README.en.md)

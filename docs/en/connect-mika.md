@@ -25,4 +25,4 @@ In the Mika tab of the RayNeo app, choose **Check connection** (检查连接). O
 
 If the check fails, verify that network access is on in Mika and that the port and token match. The connection to Mika has been checked. Phone tasks still need testing with the release build and the public Mika release.
 
-[Back to the project homepage](../../README.md)
+[Back to the project homepage](../../README.en.md)
