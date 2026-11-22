@@ -12,7 +12,7 @@
 
 [下载改造版雷鸟 App 和 Windows 连接器](https://github.com/turbotang2333/io-voice-control/releases)　[下载 Paseo](https://github.com/getpaseo/paseo/releases)
 
-首版 Windows 安装程序未做代码签名。
+首版 Windows 安装程序未做代码签名，系统可能显示发布者未知。请从项目发行页下载。
 
 > 改造版雷鸟 App 和官方版签名不同。首次安装可能需要卸载官方版，卸载前请备份要保留的本地数据。
 
