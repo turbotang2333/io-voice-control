@@ -12,7 +12,7 @@ Pair RayNeo iO with a Windows computer to open conversations, send tasks by voic
 
 [RayNeo app and Windows connector releases](https://github.com/turbotang2333/io-voice-control/releases) &nbsp; [Paseo releases](https://github.com/getpaseo/paseo/releases)
 
-The first Windows installer is unsigned, so Windows may show an unknown publisher. Download it from the project releases page. To verify the file before installing, use PowerShell's `Get-FileHash -Algorithm SHA256` and compare the result with `SHA256SUMS.txt` on the release page.
+The first Windows installer is unsigned, so Windows may show an unknown publisher. Download it from the project releases page.
 
 > The modified and official RayNeo apps use different signatures. You may need to uninstall the official app first. Back up any local data you want to keep.
 
